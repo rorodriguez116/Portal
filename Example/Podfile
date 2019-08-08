@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'Portal_Example' do
+  pod 'Portal', :path => '../'
+
+  target 'Portal_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
