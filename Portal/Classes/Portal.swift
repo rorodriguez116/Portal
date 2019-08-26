@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseCore
 import FirebaseFirestore
-import TopicsCore
 
 public class Portal<T: PortalModel> {
     

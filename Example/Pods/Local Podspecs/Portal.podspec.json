@@ -19,5 +19,25 @@
     "ios": "12.0"
   },
   "source_files": "Portal/Classes/**/*",
-  "static_framework": true
+  "static_framework": true,
+  "dependencies": {
+    "Firebase/Core": [
+
+    ],
+    "Firebase/Firestore": [
+
+    ],
+    "Firebase/Auth": [
+
+    ],
+    "Firebase/Storage": [
+
+    ],
+    "Firebase/Analytics": [
+
+    ],
+    "DeepDiff": [
+
+    ]
+  }
 }

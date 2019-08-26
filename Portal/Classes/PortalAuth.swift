@@ -9,7 +9,7 @@ import Foundation
 import FirebaseAuth
 
 
-protocol PortalUser: PortalModel {
+public protocol PortalUser: PortalModel {
     var displayName: String? {get set}
     var pictureUrl: URL? {get set}
     var email: String? {get set}
@@ -28,7 +28,7 @@ extension PortalUser where Self: PortalModel {
     }
 }
 
-struct PortalAuth<S: PortalUser> {
+public struct PortalAuth<S: PortalUser> {
     
     private let portal = Portal<S>(path: "users")
     private let auth = Auth.auth()
@@ -90,7 +90,7 @@ struct PortalAuth<S: PortalUser> {
     }
 }
 
-extension PortalAuth {
+public extension PortalAuth {
     typealias PhoneAuthResult = Result<PhoneAuthProcessState, PhoneAuthVerificationError>
     typealias PhoneAuthResultCallback = (PhoneAuthResult) -> Void
     enum PhoneAuthProcessState {
