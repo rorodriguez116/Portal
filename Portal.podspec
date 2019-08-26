@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Portal'
-  s.version          = '0.1.0'
-  s.summary          = 'A short description of Portal.'
+  s.version          = '0.1.2'
+  s.summary          = 'Portal is a easy gateway to all youre Firestore operations given a collection'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
