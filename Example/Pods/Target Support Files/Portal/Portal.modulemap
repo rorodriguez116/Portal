@@ -1,0 +1,6 @@
+framework module Portal {
+  umbrella header "Portal-umbrella.h"
+
+  export *
+  module * { export * }
+}

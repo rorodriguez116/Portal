@@ -28,7 +28,7 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'https://github.com/rorodriguez116/Portal.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'Portal/Classes/**/*'
   
@@ -38,5 +38,12 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
-end
+  s.static_framework = true
+  s.dependency 'Firebase/Core'
+  s.dependency 'Firebase/Firestore'
+  s.dependency 'Firebase/Auth'
+  s.dependency 'Firebase/Storage'
+  s.dependency 'Firebase/Analytics'
+  s.dependency 'DeepDiff'
+
+  end
