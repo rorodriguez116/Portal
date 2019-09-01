@@ -8,7 +8,6 @@
 import Foundation
 import FirebaseAuth
 
-
 public protocol PortalUser: PortalModel {
     var displayName: String? {get set}
     var pictureUrl: URL? {get set}
@@ -18,7 +17,7 @@ public protocol PortalUser: PortalModel {
     init(authUser: User)
 }
 
-public extension PortalUser where Self: PortalModel {
+public extension PortalUser {
     init(authUser: User) {
         self.init(id: authUser.uid)
         self.displayName = authUser.displayName
