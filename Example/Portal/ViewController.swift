@@ -14,16 +14,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let portal = Portal<User>(path: "users")
-        portal.event(.getOne("chookity")) { (result) in
+        let auth = PortalAuth<User>(path: "users")
+        
+        auth.verify(phoneNumber: "+51944266959") { (result) in
             switch result {
-            case .success(let response): print("Success");
-            print(response?.objects.first)
+            case .success(let state): handle(state: state)
             case .failure(let error): print(error)
             }
-
         }
-
+        
+        func handle(state: PortalAuth<User>.PhoneAuthProcessState){
+            switch state {
+            case .verificationCode: print("Show verification code entry UI")
+            case .newUser(let user): print("Show new user welcome screent and complete register")
+            case .signedIn(let user): print("Show user homescreen or handle with message")
+            
+            }
+        }
+        
         // Do any additional setup after loading the view.
     }
     

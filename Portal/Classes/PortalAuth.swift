@@ -18,7 +18,7 @@ public protocol PortalUser: PortalModel {
     init(authUser: User)
 }
 
-extension PortalUser where Self: PortalModel {
+public extension PortalUser where Self: PortalModel {
     init(authUser: User) {
         self.init(id: authUser.uid)
         self.displayName = authUser.displayName
@@ -30,16 +30,22 @@ extension PortalUser where Self: PortalModel {
 
 public struct PortalAuth<S: PortalUser> {
     
-    private let portal = Portal<S>(path: "users")
+    private let portal: Portal<S>
     private let auth = Auth.auth()
     private var currentUser: User? {
         auth.currentUser
     }
     
+    public init(path: String){
+        self.portal = Portal<S>(path: path)
+    }
+    
+//    MARK: Flow goes as follow: 1) verify phone number, 2) signInWith verification code, 3) Handle User state
     public func verify(phoneNumber: String, callback: @escaping PhoneAuthResultCallback) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil)  { (verificationID, error) in
             if let error = error {callback(.failure(.underlying(error))) ; return}
             UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+            callback(.success(.verificationCode))
         }
     }
     
@@ -79,6 +85,8 @@ public struct PortalAuth<S: PortalUser> {
             }
         }
     }
+    
+//    MARK: To be used in future update
     
     private func update(user: S) {
         portal.event(.update(user)) { (result) in

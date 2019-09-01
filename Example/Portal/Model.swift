@@ -9,8 +9,14 @@
 import Foundation
 import Portal
 
-struct User: PortalModel {
-    init(id: String) {
+struct User: PortalUser {
+    var displayName: String?
+    
+    var email: String?
+    
+    var phoneNumber: String?
+    
+    public init(id: String) {
         self.id = id
     }
     
