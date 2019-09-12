@@ -14,9 +14,20 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Portal Example"
+                
+    }
+    
+//    MARK: Sign-in a new user in FirebaseAuth and create it in your Firestore database easily.
+    
+//    Use Portal's simple API to access FirebaseAuth features.
+    
+//    1) This function creates a new user in FirebaseAuth with a phone number and also adding it to your Firestore database automatically following your defined Data layer's model wich is passed as a Generic when creating an instance of PortalAuth.
+    
+    func signInUserWithPhoneNumber(){
         let auth = PortalAuth<User>(path: "users")
         
-        auth.verify(phoneNumber: "+51944266959") { (result) in
+        auth.verify(phoneNumber: "YourTestPhoneNumber") { (result) in
             switch result {
             case .success(let state): handle(state: state)
             case .failure(let error): print(error)
@@ -26,24 +37,10 @@ class ViewController: UIViewController {
         func handle(state: PortalAuth<User>.PhoneAuthProcessState){
             switch state {
             case .verificationCode: print("Show verification code entry UI")
-            case .newUser(let user): print("Show new user welcome screent and complete register")
-            case .signedIn(let user): print("Show user homescreen or handle with message")
-            
+            case .newUser(let user): print("Show new user welcome screen and complete its profile ", user.id)
+            case .signedIn(let user): print("Show user homescreen or handle with message", user.id)
+                
             }
         }
-        
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
