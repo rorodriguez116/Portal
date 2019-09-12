@@ -49,18 +49,18 @@ let portal = Portal<Pet>(path: "pets")
 
 ```
 ### Portal Events
-<p> To use Portal's features you must access them by the `.event` function. In this example we'll use the `.new` event to create a new document with the structure of type Pet in your database in the path pets </p>
+<p> To use Portal's features you must access them by the *.event* function. In this example we'll use the *.new* event to create a new document with the structure of type Pet in your database in the path pets </p>
 
 ```swift 
+let portal = Portal<Pet>(path: "pets")
+let myPet = Pet(id: "MyPetID", name: "Monchi", age: 3)
 
-    let portal = Portal<Pet>(path: "pets")
-    let myPet = Pet(id: "MyPetID", name: "Monchi", age: 3)
-        portal.event(.new(myPet)) { (result) in
-            switch result {
-            case .success: print("Success! Your data has been succesfully created")
-            case .failure(let error): print(error)
-            }
-        }
+portal.event(.new(myPet)) { (result) in
+    switch result { 
+        case .success: print("Success! Your data has been succesfully created")
+        case .failure(let error): print(error)
+    }
+}
 
 ```
 
