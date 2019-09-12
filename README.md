@@ -42,14 +42,11 @@ struct Pet: PortalModel {
 <p>To instantiate a new Portal you need to specify what model it will write to your database and at what path.</p>
   
 ```swift
-
 let portal = Portal<Pet>(path: "pets")
-
-...
 
 ```
 ### Portal Events
-<p> To use Portal's features you must access them by the *.event* function. In this example we'll use the *.new* event to create a new document with the structure of type Pet in your database in the path pets </p>
+<p> To use Portal's features you must access them by the .event function. In this example we'll use the .new event to create a new document with the structure of type Pet in your database in the path pets </p>
 
 ```swift 
 let portal = Portal<Pet>(path: "pets")
