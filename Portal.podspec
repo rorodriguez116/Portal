@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Portal'
-  s.version          = '0.1.5'
+  s.version          = '0.1.6'
   s.summary          = 'Portal is a easy gateway to all youre Firestore operations given a collection'
 
 # This description is used to generate tags and improve search results.
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+                    Portal is a simple abstraction layer of FirebaseFirestore and FirebaseAuth, it saves you a lot of work by automatycally parsing  document snapshots into your data layer model by using generics at its core. Portal also allows you to use FirebaseAuth with a very easy to use API to sign-in & sign-up new users into FirebaseAuth and create its mirror representation into your  database all done by PortalAuth while respecting your specified data layer model.
                        DESC
 
   s.homepage         = 'https://github.com/rorodriguez116/Portal'
@@ -30,6 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '12.0'
 
+  s.swift_version = '5.0'
   s.source_files = 'Portal/Classes/**/*'
   
   # s.resource_bundles = {
