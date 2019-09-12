@@ -7,6 +7,8 @@
 
 import Foundation
 
+//  MARK: EventResponse
+
 public extension Portal {
     struct EventResponse {
         public let streamDeltas: [StreamObjectDelta]?
