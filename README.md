@@ -22,7 +22,7 @@ pod 'Portal'
 
 ## Author
 
-rorodriguez116, rorodriguez116@icloud.com
+Rolando Rodriguez.
 
 ## License
 
