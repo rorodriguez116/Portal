@@ -39,7 +39,7 @@ struct Pet: PortalModel {
 ```
 
 ### Creating a Portal
-<p>To instantiate a new Portal you need to specify what model it will write to your database and at what path.</p>
+<p>To instantiate a new Portal you need to specify what model it will use and at what path in your database.</p>
   
 ```swift
 let portal = Portal<Pet>(path: "pets")
