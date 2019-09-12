@@ -18,7 +18,7 @@ it, simply add the following line to your Podfile:
 pod 'Portal'
 ```
 ## Usage
-<p> Portal uses generics to identify what model it should read/write from/to your database, to do so it uses generics at is core. Models used by Portal must conform to the PortalModel protocol. </p>
+<p> Portal uses generics to identify what model it should use with your database path, to do so it uses generics at is core. Models used by Portal must conform to the PortalModel protocol. </p>
 
 ### Creating a Model
 <p> Let's declare a struct Pet which will be used as the base data layer model for this example</p>
