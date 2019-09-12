@@ -21,7 +21,7 @@ pod 'Portal'
 <p> Portal uses generics to identify what model it should use with your database path, to do so it uses generics at is core. Models used by Portal must conform to the PortalModel protocol. </p>
 
 ### Creating a Model
-<p> Let's declare a struct Pet which will be used as the base data layer model for this example</p>
+<p> Let's declare a struct Pet which will be used as the base data layer model for this example.</p>
 
 ```swift
 
@@ -47,6 +47,8 @@ let portal = Portal<Pet>(path: "pets")
 ```
 ### Portal Events
 <p> To use Portal's features you must access them by the .event function. In this example we'll use the .new event to create a new document with the structure of type Pet in your database in the path pets </p>
+
+>  If no id is specified when instantiatig the model Portal will autimatically assign a unique id using Firestore. The id is used for setting the document path and it's also added to the document attributes.
 
 ```swift 
 let portal = Portal<Pet>(path: "pets")
