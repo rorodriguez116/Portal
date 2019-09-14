@@ -7,6 +7,11 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
+
+public protocol PortalModel: Codable {
+    var portalIdentifier: String {get}
+}
 
 public extension Portal {
     typealias EventResult = Result<EventResponse?, EventError>
@@ -28,16 +33,4 @@ public extension Portal {
         case eventMapping
         case noTaskSpecified
     }
-}
-
-public protocol PortalModel: Codable {
-    var portalIdentifier: String {get}
-}
-
-struct Person: PortalModel {
-    var portalIdentifier: String {
-        return personId
-    }
-    
-    let personId: String = PortalIdentifier().uidString
 }

@@ -8,15 +8,6 @@
 import Foundation
 import FirebaseAuth
 
-public protocol PortalUser: PortalModel {
-    var displayName: String? {get set}
-    var pictureUrl: URL? {get set}
-    var email: String? {get set}
-    var phoneNumber: String? {get set}
-    
-    init(authUser: User)
-}
-
 public struct PortalAuth<S: PortalUser> {
     
     private let portal: Portal<S>
@@ -56,7 +47,8 @@ public struct PortalAuth<S: PortalUser> {
     }
     
     private func createUserInDatabase() -> S {
-        let newUser = S(authUser: self.currentUser!)
+        guard let user = currentUser else {fatalError("PortalAuth: Can't create user in database without any data.")}
+        let newUser = S(id: user.uid, email: user.email, phoneNumber: user.phoneNumber)
         portal.event(.new(newUser)) { (result) in
             switch result {
             case .success: print("PortalAuth: User successfully created.")
@@ -74,9 +66,7 @@ public struct PortalAuth<S: PortalUser> {
             }
         }
     }
-    
-//    MARK: To be used in future update
-    
+        
     private func update(user: S) {
         portal.event(.update(user)) { (result) in
             switch result {
@@ -85,6 +75,10 @@ public struct PortalAuth<S: PortalUser> {
             }
         }
     }
+}
+
+public protocol PortalUser: PortalModel {
+    init(id: String, email: String?, phoneNumber: String?)
 }
 
 public extension PortalAuth {

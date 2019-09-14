@@ -9,17 +9,6 @@
 import UIKit
 import Portal
 
-struct Pet: PortalModel {
-    
-    var portalIdentifier: String {
-        self.id
-    }
-    
-    let id: String
-    let name: String
-    let age: Int
-}
-
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -48,7 +37,7 @@ class ViewController: UIViewController {
     }
     
     func signInUserWithPhoneNumber(){
-        let auth = PortalAuth<User>(path: "users")
+        let auth = PortalAuth<MyUser>(path: "users")
         
         auth.verify(phoneNumber: "YourTestPhoneNumber") { (result) in
             switch result {
@@ -57,7 +46,7 @@ class ViewController: UIViewController {
             }
         }
         
-        func handle(state: PortalAuth<User>.PhoneAuthProcessState){
+        func handle(state: PortalAuth<MyUser>.PhoneAuthProcessState){
             switch state {
             case .verificationCode: print("Show verification code entry UI")
             case .newUser(let user): print("Show new user welcome screen and complete its profile ", user.id)
