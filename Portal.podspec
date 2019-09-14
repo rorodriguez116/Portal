@@ -8,8 +8,8 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Portal'
-  s.version          = '0.1.6'
-  s.summary          = 'Portal is a easy gateway to all youre Firestore operations given a collection'
+  s.version          = '0.1.8'
+  s.summary          = 'Portal is an easy gateway to all youre Firestore operations given a collection'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -45,6 +45,5 @@ Pod::Spec.new do |s|
   s.dependency 'Firebase/Auth'
   s.dependency 'Firebase/Storage'
   s.dependency 'Firebase/Analytics'
-  s.dependency 'DeepDiff'
 
   end

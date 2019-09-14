@@ -10,26 +10,16 @@ import Foundation
 import Portal
 
 struct User: PortalUser {
-    var displayName: String?
     
-    var email: String?
-    
-    var phoneNumber: String?
-    
-    public init(id: String) {
-        self.id = id
-    }
-    
-    var id: String
-    
-    static func compareContent(_ a: User, _ b: User) -> Bool {
-        return a.name == b.name
-    }
-    var diffId: String {
+    var portalIdentifier: String {
         return id
     }
-        
-    var name: String?
+    var displayName: String?
+    var id: String
     var age: Int?
     var pictureUrl: URL?
+    var email: String?
+    var phoneNumber: String?
+    
+  
 }

@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-public extension Encodable where Self: PortalModel{
+public extension Encodable where Self: PortalModel {
     /// Returns a JSON dictionary, with choice of minimal information
     func firestoreObject() -> [String: Any]? {
         let encoder = JSONEncoder()
@@ -21,7 +21,7 @@ public extension Encodable where Self: PortalModel{
     }
 }
 
-public extension Decodable {
+public extension Decodable where Self: PortalModel {
     /// Initialize from JSON Dictionary. Return nil on failure
     init?(dictionary value: [String:Any]){
         

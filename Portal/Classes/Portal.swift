@@ -17,6 +17,7 @@ public class Portal<T: PortalModel> {
     private var reference: CollectionReference {
         return database.collection(path)
     }
+    
         
     public init(path: String){
         self.database = Firestore.firestore()
@@ -58,20 +59,59 @@ public class Portal<T: PortalModel> {
         
         switch task {
         case .new(let model):
-            guard let objectData = model.firestoreObject() else {return}
-            reference.document(model.id).setData(objectData, completion: handler)
+            self.create(model: model, handler: handler)
         case .update(let model):
-            guard let objectData = model.firestoreObject() else {return}
-            reference.document(model.id).updateData(objectData, completion: handler)
+            self.update(model: model, handler: handler)
         case .removeOne(let id):
             reference.document(id).delete(completion: handler)
         default: completion(.failure(.eventMapping))
         }
     }
+    
+    private func create(model: PortalModel, handler: @escaping HandlerFactory.WriteHandler){
+        let data = unwrap(model: model)
+        reference.document(model.portalIdentifier).setData(data, completion: handler)
+    }
+    
+    private func update(model: PortalModel, handler: @escaping HandlerFactory.WriteHandler){
+        let data = unwrap(model: model)
+        reference.document(model.portalIdentifier).updateData(data, completion: handler)
+    }
+    
+    fileprivate func unwrap(model: PortalModel) -> [String: Any] {
+        guard let data = model.firestoreObject() else {fatalError(ErrorMessage.unwrapping.body)}
+        return data
+    }
 }
 
+public struct PortalIdentifier {
+    public var uidString: String
+    
+    public init() {
+        self.uidString = Firestore.firestore().collection("").document().documentID
+    }
+}
 
-
+public extension Portal {
+    enum ErrorMessage {
+        case identifierLinking
+        case update
+        case unwrapping
+        
+        var body: String {
+            switch self {
+            case .identifierLinking:
+                return "Portal for \(String(describing: T.self)): automaticallAyssignId is turned off on this portal's option, notheless no PortalID is provided for the model, please provide an ID in order to create your document at the specified path"
+                
+            case .unwrapping:
+                return "Portal couldn't parse your model \(String(describing: T.self)) to a representable dictionary suited for Firestore"
+                
+            case .update:
+                return "Portal for \(String(describing: T.self)): There's no PortalID provided for the model. Please provide an ID in order to update your document at the specified path, if no ID is provided Portal wont know what document to update."
+            }
+        }
+    }
+}
 
 
 

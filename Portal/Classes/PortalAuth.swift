@@ -17,16 +17,6 @@ public protocol PortalUser: PortalModel {
     init(authUser: User)
 }
 
-public extension PortalUser {
-    init(authUser: User) {
-        self.init(id: authUser.uid)
-        self.displayName = authUser.displayName
-        self.phoneNumber = authUser.phoneNumber
-        self.pictureUrl = authUser.photoURL
-        self.email = authUser.email
-    }
-}
-
 public struct PortalAuth<S: PortalUser> {
     
     private let portal: Portal<S>

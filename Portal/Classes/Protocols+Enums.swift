@@ -7,7 +7,6 @@
 
 import Foundation
 import FirebaseFirestore
-import DeepDiff
 
 public extension Portal {
     typealias EventResult = Result<EventResponse?, EventError>
@@ -31,7 +30,14 @@ public extension Portal {
     }
 }
 
-public protocol PortalModel: Codable, DiffAware {
-    var id: String {get set}
-    init(id: String)
+public protocol PortalModel: Codable {
+    var portalIdentifier: String {get}
+}
+
+struct Person: PortalModel {
+    var portalIdentifier: String {
+        return personId
+    }
+    
+    let personId: String = PortalIdentifier().uidString
 }

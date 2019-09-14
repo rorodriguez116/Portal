@@ -9,6 +9,17 @@
 import UIKit
 import Portal
 
+struct Pet: PortalModel {
+    
+    var portalIdentifier: String {
+        self.id
+    }
+    
+    let id: String
+    let name: String
+    let age: Int
+}
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -23,6 +34,18 @@ class ViewController: UIViewController {
 //    Use Portal's simple API to access FirebaseAuth features.
     
 //    1) This function creates a new user in FirebaseAuth with a phone number and also adding it to your Firestore database automatically following your defined Data layer's model wich is passed as a Generic when creating an instance of PortalAuth.
+
+    
+    func createModel(){
+        let portal = Portal<Pet>(path: "pets")
+        let myPet = Pet(id: "MyPetID", name: "Monchi", age: 3)
+        portal.event(.new(myPet)) { (result) in
+            switch result {
+            case .success: print("Success! Your data has been succesfully created")
+            case .failure(let error): print(error)
+            }
+        }
+    }
     
     func signInUserWithPhoneNumber(){
         let auth = PortalAuth<User>(path: "users")
