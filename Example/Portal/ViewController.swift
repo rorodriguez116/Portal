@@ -8,14 +8,19 @@
 
 import UIKit
 import Portal
+import Combine
+import Firebase
 
 class ViewController: UIViewController {
 
+    var subscription: AnyCancellable!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Portal Example"
-                
+        self.subscription = combineFirestoreRT
+//        streamAllModels()
     }
     
 //    MARK: Sign-in a new user in FirebaseAuth and create it in your Firestore database easily.
@@ -27,32 +32,63 @@ class ViewController: UIViewController {
     
     func createModel(){
         let portal = Portal<Pet>(path: "pets")
-        let myPet = Pet(id: "MyPetID", name: "Monchi", age: 3)
-        portal.event(.new(myPet)) { (result) in
-            switch result {
-            case .success: print("Success! Your data has been succesfully created")
-            case .failure(let error): print(error)
-            }
+        let myPet = Pet(id: "MyPetID2", name: "Machin", age: 4)
+        
+        subscription = portal.event(.new(myPet)).sink(receiveCompletion: { (completion) in
+            print(completion)
+        }) { (result) in
+            print("data uploaded!")
         }
     }
     
-    func signInUserWithPhoneNumber(){
-        let auth = PortalAuth<MyUser>(path: "users")
+    func getModel() {
+        let portal = Portal<Pet>(path: "pets")
+
+        subscription = portal.event(.fetchOne("MyPetID")).sink(receiveCompletion: { (completion) in
+            print(completion)
+        }, receiveValue: { (pets) in
+            print(pets)
+        })
+    }
+    
+    func getAllModels() {
+        let portal = Portal<Pet>(path: "pets")
+        subscription = portal.event(.fetchAll(nil)).sink(receiveCompletion: { (completion) in
+            print(completion)
+        }, receiveValue: { (pets) in
+            print(pets)
+        })
+    }
+    
+    func streamAllModels() {
+          let portal = Portal<Pet>(path: "pets")
+        subscription = portal.event(.streamAll(nil)).sink(receiveCompletion: { (completion) in
+              print(completion)
+          }, receiveValue: { (pets) in
+              print(pets)
+          })
+      }
+    
+    var combineFirestoreRT: AnyCancellable {
+        let database = Firestore.firestore()
+        let reference = database.collection("pets")
         
-        auth.verify(phoneNumber: "YourTestPhoneNumber") { (result) in
-            switch result {
-            case .success(let state): handle(state: state)
-            case .failure(let error): print(error)
+        return Future<[Pet], Error> { promise in
+            reference.addSnapshotListener { (query, error) in
+                if let err = error {
+                    promise(.failure(err))
+                } else {
+                    let objects = query?.documents.map({ (document) -> Pet in
+                        return Pet(dictionary: document.data())!
+                    })
+                    
+                    promise(.success(objects!))
+                }
             }
-        }
-        
-        func handle(state: PortalAuth<MyUser>.PhoneAuthProcessState){
-            switch state {
-            case .verificationCode: print("Show verification code entry UI")
-            case .newUser(let user): print("Show new user welcome screen and complete its profile ", user.id)
-            case .signedIn(let user): print("Show user homescreen or handle with message", user.id)
-                
-            }
+        }.sink(receiveCompletion: { (completion) in
+            print(completion)
+        }) { (pets) in
+            print("pets manually: ", pets)
         }
     }
 }
