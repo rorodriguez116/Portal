@@ -8,25 +8,26 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import Combine
 
 public protocol PortalModel: Codable {
     var portalIdentifier: String {get}
 }
 
 public extension Portal {
-    typealias EventResult = Result<EventResponse?, EventError>
-    typealias EventCompletion = (EventResult) -> Void
     typealias Filter = (field: String, value: Any)
     
-    enum EventTask<T: PortalModel> {
-        case getOne(String)
-        case getAll(Filter)
-        case new(T)
+    enum ReadEvent<T: PortalModel> {
+        case fetchOne(String)
+        case fetchAll(Filter?)
         case streamAll(Filter?)
+    }
+    enum WriteEvent<T: PortalModel> {
+        case new(T)
         case removeOne(String)
         case update(T)
     }
-    
+
     enum EventError: Error {
         case resultConversion
         case underlying(Error?)

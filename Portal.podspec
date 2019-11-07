@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'Portal'
-  s.version          = '0.1.9'
+  s.version          = '0.5.2'
   s.summary          = 'Portal is an easy gateway to all youre Firestore operations given a collection'
 
 # This description is used to generate tags and improve search results.
@@ -28,9 +28,9 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/rorodriguez116/Portal.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '12.0'
+  s.ios.deployment_target = '13.0'
 
-  s.swift_version = '5.0'
+  s.swift_version = '5.1'
   s.source_files = 'Portal/Classes/**/*'
   
   # s.resource_bundles = {
